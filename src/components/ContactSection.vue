@@ -21,7 +21,7 @@
 
   &::before {
     content: "";
-    background: url("@/assets/images/contact-object.webp") center/contain no-repeat;
+    
     position: absolute;
     top: 0;
     left: 50%;
