@@ -200,17 +200,23 @@
 
     .career-header-row {
       flex-direction: column;
-      align-items: flex-start;
+      align-items: center;
+      text-align: center;
 
       .career-title {
-        text-align: left;
+        text-align: center !important;
         font-size: 4rem !important;
       }
     }
 
     .career-content-row {
       flex-direction: column;
-      align-items: flex-start;
+      align-items: center;
+      text-align: center;
+
+      .career-description {
+        margin: 0 auto;
+      }
 
       .learn-more-btn {
         margin-top: 20px;
@@ -253,9 +259,21 @@
     }
 
     .career-description br {
-      display: none; /* removes forced line breaks on mobile */
+      display: none; 
+
     }
 
+  .career {
+    .career-header-row,
+    .career-content-row {
+      text-align: center;
+      align-items: center;
+    }
+
+    .career-description {
+      margin: 0 auto;
+    }
+    }
     .career-grid {
       grid-template-columns: 1fr;
       gap: 15px;

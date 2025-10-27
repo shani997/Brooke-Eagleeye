@@ -3,19 +3,24 @@
     <header class="nav">
       <div class="logo">be</div>
 
-      <nav class="menu">
-        <a href="#"
-          >About <span><br />Me</span>
-        </a>
-        <a href="#"
-          >Highlight <span><br />Career</span></a
-        >
-        <a href="#"
-          >Partner & <span><br />Events</span></a
-        >
-        <a href="#"
-          >Contact <span><br />Me</span></a
-        >
+    
+      <button
+        class="hamburger"
+        :aria-expanded="isOpen.toString()"
+        aria-label="Toggle menu"
+        @click="toggleMenu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+     
+      <nav :class="['menu', { open: isOpen }]" @click.self="closeMenu">
+        <a href="#">About <span><br />Me</span></a>
+        <a href="#">Highlight <span><br />Career</span></a>
+        <a href="#">Partner & <span><br />Events</span></a>
+        <a href="#">Contact <span><br />Me</span></a>
       </nav>
 
       <img class="nike-logo" src="@/assets/images/nike.png" alt="Nike Logo" />
@@ -24,25 +29,21 @@
     <section class="hero">
       <div class="hero-content">
         <div class="player-cards">
-         <div class="player-card-stack">
-  
-  <div class="player-card top-card">
-    <img src="@/assets/images/wilson.webp" alt="Brooke Eagleeye" />
-    <h3>Brooke Eagleeye</h3>
-    <p>WGC Champions 2025</p>
-  </div>
+          <div class="player-card-stack">
+            <div class="player-card top-card">
+              <img src="@/assets/images/wilson.webp" alt="Brooke Eagleeye" />
+              <h3>Brooke Eagleeye</h3>
+              <p>WGC Champions 2025</p>
+            </div>
 
- 
-  <div class="player-card back-card">
-    <img src="@/assets/images/brooke.webp" alt="Brooke Eagleeye" />
-    <h3>Brooke Eagleeye</h3>
-    <p>WGC Champions 2024</p>
-  </div>
-</div>
-
+            <div class="player-card back-card">
+              <img src="@/assets/images/brooke.webp" alt="Brooke Eagleeye" />
+              <h3>Brooke Eagleeye</h3>
+              <p>WGC Champions 2024</p>
+            </div>
+          </div>
         </div>
 
-        
         <div class="hero-text">
           <h1><span>GOLF</span><br />JOURNEY</h1>
           <p>
@@ -58,9 +59,6 @@
             <i class="fa-brands fa-tiktok"></i>
           </div>
         </div>
-
-        
-       
       </div>
     </section>
   </div>
@@ -68,25 +66,41 @@
 
 <script>
 export default {
-  mounted() {
-    window.addEventListener('scroll', this.handleScroll);
+  data() {
+    return {
+      isOpen: false,
+    };
   },
+  mounted() {
+  
+    window.addEventListener('resize', this.handleResize);
+  },
+  beforeUnmount() {
+   
+    window.removeEventListener('resize', this.handleResize);
+  },
+  
   beforeDestroy() {
-    window.removeEventListener('scroll', this.handleScroll);
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('resize', this.handleResize);
+    }
   },
   methods: {
-    handleScroll() {
-      const hero = document.querySelector('.hero');
-      if (window.scrollY > 100) { 
-        hero.classList.add('scrolled');
-      } else {
-        hero.classList.remove('scrolled');
+    toggleMenu() {
+      this.isOpen = !this.isOpen;
+    },
+    closeMenu() {
+      this.isOpen = false;
+    },
+    handleResize() {
+      
+      if (window.innerWidth > 900 && this.isOpen) {
+        this.isOpen = false;
       }
     },
   },
 };
 </script>
-
 
 <style scoped lang="scss">
 .nav {
@@ -94,26 +108,30 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 6rem;
-  background: transparent;
   position: absolute;
   width: 100%;
   top: 0;
-  z-index: 20;
+  z-index: 50;
   background-color: #2bb7f5;
-
-.hero.scrolled {
-  background-color: #2bb7f5;
-}
 
   .logo {
     font-weight: 800;
     font-size: 2rem;
     color: #f3f927;
+    z-index: 60;
   }
+
+  .nike-logo {
+    width: 90px;
+    z-index: 60;
+  }
+
 
   .menu {
     display: flex;
     gap: 5rem;
+    align-items: center;
+    z-index: 55;
 
     a {
       color: white;
@@ -125,9 +143,67 @@ export default {
       }
     }
   }
+}
 
-  .nike-logo {
-    width: 90px;
+
+.hamburger {
+  display: none; 
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin-left: 1rem;
+  cursor: pointer;
+  z-index: 200; 
+  display: inline-flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    display: block;
+    width: 28px;
+    height: 3px;
+    background: #f6d84a; 
+    border-radius: 2px;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+}
+
+
+@media (max-width: 900px) {
+  .nav {
+    padding: 1rem 1.5rem;
+
+    .nike-logo {
+      display: none; 
+    }
+
+    .menu {
+     
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #2bb7f5;
+      flex-direction: column;
+      text-align: center;
+      padding: 1.2rem 0;
+      gap: 1.2rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+      z-index: 100;
+    }
+
+    
+    .menu.open {
+      display: flex;
+    }
+
+   
+    .hamburger {
+      display: inline-flex;
+    }
   }
 }
 
@@ -252,7 +328,54 @@ export default {
   }
 }
 
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  z-index: 100;
 
+  span {
+    width: 28px;
+    height: 3px;
+    background: #f6d84a; 
+    transition: 0.3s ease;
+  }
+}
+
+@media (max-width: 900px) {
+  .menu {
+    position: absolute;
+    top: 80px;
+    right: 0;
+    background: #2bb7f5;
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem 0;
+    gap: 1.8rem;
+  }
+
+  .menu.open {
+    display: flex;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .nike-logo {
+    display: none;
+  }
+}
+
+
+@media (max-width: 1024px) {
+  .player-card-stack {
+    display: none !important;
+  }
+}
 
 
 @media (max-width: 1024px) {

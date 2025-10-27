@@ -74,6 +74,8 @@
     }
   }
 
+
+
   .learn-more-btn {
     display: inline-flex;
     align-items: center;
@@ -148,6 +150,39 @@
  
 }
 
+@media (max-width: 1024px) {
+  .technique {
+    .text {
+
+      .description {
+        text-align: center;
+        margin: 0 auto; 
+        padding-top:50px;
+      }
+
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .technique {
+    .text {
+
+      .description {
+        display: none; 
+        padding-top:50px;
+      }
+
+      .sub-description {
+        display: block;
+        text-align: center;
+        margin: 0 auto; 
+        padding-top:50px;
+      }
+
+    }
+  }
+}
 
 
 
